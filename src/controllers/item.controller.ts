@@ -22,12 +22,12 @@ export class ItemController {
   }
 
   @Get()
-  getAll() {
+  getAll(): Promise<Item[]> {
     return this.itemService.getAll();
   }
 
   @Get(':uuid')
-  getOne(@Param('uuid') uuid: UUID) {
+  getOne(@Param('uuid') uuid: UUID): Promise<Item> {
     return this.itemService.getOne(uuid);
   }
 

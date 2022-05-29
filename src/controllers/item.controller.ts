@@ -11,7 +11,9 @@ import { ItemService } from '../services/item.service';
 import { CreateItemDto, UpdateItemDto } from '../dtos/item.dto';
 import { Item } from '../entities/item.entity';
 import { UUID } from '../utils/uuid.type';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('items')
 @Controller('items')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}

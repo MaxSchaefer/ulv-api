@@ -11,7 +11,9 @@ import { PlaceService } from '../services/place.service';
 import { CreatePlaceDto, UpdatePlaceDto } from '../dtos/place.dto';
 import { Place } from '../entities/place.entity';
 import { UUID } from '../utils/uuid.type';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('places')
 @Controller('places')
 export class PlaceController {
   constructor(private readonly placeService: PlaceService) {}

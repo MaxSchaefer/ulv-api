@@ -1,5 +1,12 @@
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsPort, IsString, validateSync } from 'class-validator';
+import {
+  IsBase64,
+  IsEnum,
+  IsOptional,
+  IsPort,
+  IsString,
+  validateSync,
+} from 'class-validator';
 
 export enum Environment {
   Development = 'development',
@@ -15,6 +22,10 @@ export class Config {
 
   @IsString()
   DATABASE = 'ulv.sqlite';
+
+  @IsOptional()
+  @IsBase64()
+  BASIC_AUTH: string;
 }
 
 export const validate = (config: Record<string, unknown>): Config => {

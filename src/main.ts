@@ -1,10 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { Logger, ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Config, Environment } from './utils/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import pkg from './utils/package-json';
+import * as basicAuth from 'express-basic-auth';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -24,6 +25,19 @@ async function bootstrap() {
       forbidUnknownValues: true,
     }),
   );
+
+  if (configService.get('BASIC_AUTH')) {
+    const [username, password] = Buffer.from(
+      configService.get<string>('BASIC_AUTH'),
+      'base64',
+    )
+      .toString('utf-8')
+      .split(':');
+    if (!username || !password)
+      throw new Error('Cannot parse provided credentials for basic-auth');
+    app.use(basicAuth({ users: { [username]: password }, challenge: true }));
+    Logger.log('Enabled basic-auth with provided credentials');
+  }
 
   if (configService.get('NODE_ENV') === Environment.Development) {
     const swaggerConfig = new DocumentBuilder()

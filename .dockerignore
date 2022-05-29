@@ -1,0 +1,8 @@
+# Ignore all
+*
+
+# Whitelist
+!src
+!nest-cli.json
+!package*
+!tsconfig*

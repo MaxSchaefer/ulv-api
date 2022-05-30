@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { AbstractEntity } from './abstract.entity';
+import { Place } from './place.entity';
 
 @Entity()
 export class Item extends AbstractEntity {
@@ -11,4 +12,7 @@ export class Item extends AbstractEntity {
 
   @Column({ type: 'datetime', nullable: true })
   expireAt: Date;
+
+  @ManyToOne(() => Place, (place) => place.items)
+  place: Place;
 }

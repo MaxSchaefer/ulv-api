@@ -1,4 +1,12 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { EntityWithUuidDto } from '../utils/entityWithUuid.dto';
 
 export class CreateItemDto {
   @IsString()
@@ -10,6 +18,11 @@ export class CreateItemDto {
   @IsOptional()
   @IsDate()
   expireAt?: Date;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => EntityWithUuidDto)
+  place?: EntityWithUuidDto;
 }
 
 export class UpdateItemDto {
@@ -24,4 +37,9 @@ export class UpdateItemDto {
   @IsOptional()
   @IsDate()
   expireAt?: Date;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => EntityWithUuidDto)
+  place?: EntityWithUuidDto;
 }

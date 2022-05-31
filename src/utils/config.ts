@@ -10,6 +10,7 @@ import {
 
 export enum Environment {
   Development = 'development',
+  Test = 'test',
   Production = 'production',
 }
 
@@ -21,7 +22,7 @@ export class Config {
   PORT = '1337';
 
   @IsString()
-  DATABASE = 'ulv.sqlite';
+  DATABASE = ':memory:';
 
   @IsOptional()
   @IsBase64()

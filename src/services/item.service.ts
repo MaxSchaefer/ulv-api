@@ -13,6 +13,9 @@ export class ItemService extends AbstractService<Item> {
   }
 
   protected getQueryBuilder(): SelectQueryBuilder<Item> {
-    return super.getQueryBuilder().leftJoinAndSelect('item.place', 'place');
+    return super
+      .getQueryBuilder()
+      .leftJoinAndSelect('item.place', 'place')
+      .leftJoinAndSelect('item.nutrients', 'nutrients');
   }
 }

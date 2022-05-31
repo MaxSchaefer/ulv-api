@@ -19,17 +19,17 @@ export abstract class AbstractService<Entity extends ObjectLiteral> {
     return this.repository.createQueryBuilder(this.entityName);
   }
 
+  protected async save(entity: Entity): Promise<void> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    await this.repository.save(entity);
+  }
+
   async create(partial: DeepPartial<Entity>): Promise<Entity> {
-    const res = await this.repository
-      .createQueryBuilder()
-      .insert()
-      .values(partial)
-      .execute();
-    if (res.identifiers.length === 0)
-      throw new Error('Insert executed without affect');
-    const uuid = Object.values(res.identifiers[0])[0] as unknown as UUID;
-    this.logger.verbose(`Created ${uuid}`);
-    return this.getOne(uuid);
+    const entity = this.repository.create(partial);
+    await this.save(entity);
+    this.logger.verbose(`Created ${entity.uuid}`);
+    return this.getOne(entity.uuid);
   }
 
   getAll(): Promise<Entity[]> {
@@ -48,10 +48,8 @@ export abstract class AbstractService<Entity extends ObjectLiteral> {
 
   async update(uuid: UUID, partial: DeepPartial<Entity>): Promise<Entity> {
     let entity = await this.getOne(uuid);
-    entity = Object.assign(entity, partial);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    await this.repository.save(entity);
+    entity = this.repository.merge(entity, partial);
+    await this.save(entity);
     await this.logger.verbose(`Updated ${uuid}`);
     return this.getOne(uuid);
   }

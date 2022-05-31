@@ -7,13 +7,14 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { EntityWithUuidDto } from '../utils/entityWithUuid.dto';
+import { CreateNutrientsDto, UpdateNutrientsDto } from './nutrients.dto';
 
 export class CreateItemDto {
   @IsString()
   name: string;
 
   @IsNumber()
-  amount = 0;
+  amount? = 0;
 
   @IsOptional()
   @IsDate()
@@ -23,6 +24,11 @@ export class CreateItemDto {
   @ValidateNested()
   @Type(() => EntityWithUuidDto)
   place?: EntityWithUuidDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => CreateNutrientsDto)
+  nutrients?: CreateNutrientsDto;
 }
 
 export class UpdateItemDto {
@@ -42,4 +48,9 @@ export class UpdateItemDto {
   @ValidateNested()
   @Type(() => EntityWithUuidDto)
   place?: EntityWithUuidDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => UpdateNutrientsDto)
+  nutrients?: UpdateNutrientsDto;
 }

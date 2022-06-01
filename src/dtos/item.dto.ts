@@ -1,5 +1,6 @@
 import {
   IsDate,
+  IsISO8601,
   IsNumber,
   IsOptional,
   IsString,
@@ -17,7 +18,7 @@ export class CreateItemDto {
   amount? = 0;
 
   @IsOptional()
-  @IsDate()
+  @IsISO8601()
   expireAt?: Date;
 
   @IsOptional()
@@ -41,7 +42,7 @@ export class UpdateItemDto {
   amount?: number;
 
   @IsOptional()
-  @IsDate()
+  @IsISO8601()
   expireAt?: Date;
 
   @IsOptional()

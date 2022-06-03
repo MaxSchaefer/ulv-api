@@ -37,6 +37,18 @@ describe('CartItem', () => {
     expect(body.item).toEqual(expect.objectContaining({ uuid: item.uuid }));
   });
 
+  it('Create cart-item without existing item', async () => {
+    const dto: CreateCartItemDto = { amount: 1, newItem: { name: 'Pizza' } };
+    const res = req.post('/cart-items').send(dto).expect(201);
+    const { body } = await res;
+    expect(body).toEqual(
+      expect.objectContaining({ amount: dto.amount, isShopped: false }),
+    );
+    expect(body.item).toEqual(
+      expect.objectContaining({ name: dto.newItem.name }),
+    );
+  });
+
   it('Read all cart-items', async () => {
     const item1 = await itemService.create({ name: 'Apfel' });
     const item2 = await itemService.create({ name: 'Banane' });

@@ -6,10 +6,13 @@ import { Config, Environment } from './utils/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import pkg from './utils/package-json';
 import * as basicAuth from 'express-basic-auth';
+import useHttpLogger from './utils/use-http-logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService: ConfigService<Config> = app.get(ConfigService);
+
+  useHttpLogger(app);
 
   app.enableVersioning({
     type: VersioningType.URI,

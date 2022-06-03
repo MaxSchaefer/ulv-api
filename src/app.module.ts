@@ -10,9 +10,9 @@ import { PlaceController } from './controllers/place.controller';
 import { Place } from './entities/place.entity';
 import { Nutrients } from './entities/nutrients.entity';
 import { NutrientsService } from './services/nutrients.service';
-import { CartController } from './controllers/cart.controller';
-import { CartService } from './services/cart.service';
-import { Cart } from './entities/cart.entity';
+import { CartItemController } from './controllers/cart-item.controller';
+import { CartItemService } from './services/cart-item.service';
+import { CartItem } from './entities/cart-item.entity';
 
 @Module({
   imports: [
@@ -29,9 +29,9 @@ import { Cart } from './entities/cart.entity';
         synchronize: true,
       }),
     }),
-    TypeOrmModule.forFeature([Item, Place, Nutrients, Cart])
+    TypeOrmModule.forFeature([Item, Place, Nutrients, CartItem])
   ],
-  controllers: [ItemController, PlaceController, CartController],
-  providers: [ItemService, PlaceService, NutrientsService, CartService],
+  controllers: [ItemController, PlaceController, CartItemController],
+  providers: [ItemService, PlaceService, NutrientsService, CartItemService],
 })
 export class AppModule {}

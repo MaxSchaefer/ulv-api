@@ -13,6 +13,7 @@ import { NutrientsService } from './services/nutrients.service';
 import { CartItemController } from './controllers/cart-item.controller';
 import { CartItemService } from './services/cart-item.service';
 import { CartItem } from './entities/cart-item.entity';
+import { SqliteController } from './controllers/sqlite.controller';
 
 @Module({
   imports: [
@@ -31,7 +32,7 @@ import { CartItem } from './entities/cart-item.entity';
     }),
     TypeOrmModule.forFeature([Item, Place, Nutrients, CartItem])
   ],
-  controllers: [ItemController, PlaceController, CartItemController],
+  controllers: [ItemController, PlaceController, CartItemController, SqliteController],
   providers: [ItemService, PlaceService, NutrientsService, CartItemService],
 })
 export class AppModule {}

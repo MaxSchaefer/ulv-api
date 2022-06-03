@@ -34,10 +34,6 @@ export class UpdateCartItemDto {
   @IsString()
   shoppingLocation?: string;
 
-  @IsOptional()
-  @IsBoolean()
-  isShopped?: boolean;
-
   @IsNumber()
   amount?: number;
 }

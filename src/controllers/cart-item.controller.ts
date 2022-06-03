@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { UUID } from '../utils/uuid.type';
 import { CartItemService } from '../services/cart-item.service';
@@ -63,5 +64,10 @@ export class CartItemController {
   @Delete(':uuid')
   delete(@Param('uuid') uuid: UUID): Promise<void> {
     return this.cartItemService.delete(uuid);
+  }
+
+  @Put(':uuid/shopped')
+  shop(@Param('uuid') uuid: UUID): Promise<void> {
+    return this.cartItemService.shop(uuid);
   }
 }

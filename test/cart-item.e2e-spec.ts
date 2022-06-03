@@ -7,6 +7,7 @@ import {
   UpdateCartItemDto,
 } from '../src/dtos/cart-item.dto';
 import { ItemService } from '../src/services/item.service';
+import { CreateItemDto } from '../src/dtos/item.dto';
 
 describe('CartItem', () => {
   let app: INestApplication;
@@ -63,34 +64,38 @@ describe('CartItem', () => {
     expect(body).toHaveLength(2);
   });
 
-  it('Set cart-item to shopped', async () => {
-    const item = await itemService.create({ name: 'Pizza' });
-    const updateDto: UpdateCartItemDto = { isShopped: true };
-    const cartItem = await cartItemService.create({
-      item: { uuid: item.uuid },
-      amount: 1,
-    });
-
-    const res = req
-      .patch(`/cart-items/${cartItem.uuid}`)
-      .send(updateDto)
-      .expect(200);
-    const { body } = await res;
-
-    expect(body).toEqual(expect.objectContaining({ isShopped: true }));
-  });
-
   it('Delete cart-item', async () => {
     const item = await itemService.create({ name: 'Pizza' });
-    const updateDto: UpdateCartItemDto = { isShopped: true };
     const cartItem = await cartItemService.create({
       item: { uuid: item.uuid },
       amount: 1,
     });
 
-    await req
-      .delete(`/cart-items/${cartItem.uuid}`)
-      .send(updateDto)
-      .expect(200);
+    return req.delete(`/cart-items/${cartItem.uuid}`).expect(200);
+  });
+
+  it('Shop a cart-item', async () => {
+    const createItemDto: CreateItemDto = { name: 'Pizza', amount: 1 };
+    let item = await itemService.create(createItemDto);
+    const createCartItemDto: CreateCartItemDto = {
+      amount: 3,
+      item: { uuid: item.uuid },
+    };
+    let cartItem = await cartItemService.create(createCartItemDto);
+
+    await req.put(`/cart-items/${cartItem.uuid}/shopped`).send().expect(200);
+
+    expect(item.amount).toEqual(createItemDto.amount);
+    expect(cartItem).toEqual(expect.objectContaining({ isShopped: false }));
+
+    [item, cartItem] = await Promise.all([
+      itemService.getOne(item.uuid),
+      cartItemService.getOne(cartItem.uuid),
+    ]);
+
+    expect(item.amount).toEqual(
+      createItemDto.amount + createCartItemDto.amount,
+    );
+    expect(cartItem).toEqual(expect.objectContaining({ isShopped: true }));
   });
 });

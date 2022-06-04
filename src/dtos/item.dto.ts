@@ -1,5 +1,4 @@
 import {
-  IsDate,
   IsISO8601,
   IsNumber,
   IsOptional,

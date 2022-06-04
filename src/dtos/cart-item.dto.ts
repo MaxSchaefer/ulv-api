@@ -1,9 +1,7 @@
 import {
-  IsBoolean,
   IsNumber,
   IsOptional,
   IsString,
-  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';

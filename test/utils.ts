@@ -1,7 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
-import { ItemService } from '../src/services/item.service';
 import * as request from 'supertest';
 import { Connection } from 'typeorm';
 

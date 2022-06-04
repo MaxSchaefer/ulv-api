@@ -10,7 +10,6 @@ import {
 import { Injectable } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { UUID } from '../utils/uuid.type';
-import { CartItemController } from '../controllers/cart-item.controller';
 import { Item } from '../entities/item.entity';
 
 @Injectable()

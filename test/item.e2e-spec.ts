@@ -1,6 +1,5 @@
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { Item } from '../src/entities/item.entity';
 import { CreateItemDto, UpdateItemDto } from '../src/dtos/item.dto';
 import { ItemService } from '../src/services/item.service';
 import { createApp } from './utils';

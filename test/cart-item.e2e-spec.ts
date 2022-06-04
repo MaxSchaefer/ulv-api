@@ -2,10 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { createApp } from './utils';
 import { CartItemService } from '../src/services/cart-item.service';
-import {
-  CreateCartItemDto,
-  UpdateCartItemDto,
-} from '../src/dtos/cart-item.dto';
+import { CreateCartItemDto } from '../src/dtos/cart-item.dto';
 import { ItemService } from '../src/services/item.service';
 import { CreateItemDto } from '../src/dtos/item.dto';
 

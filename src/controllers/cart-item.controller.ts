@@ -31,8 +31,13 @@ export class CartItemController {
     if (!!dto.item) {
       itemUuid = dto.item.uuid;
     } else if (!!dto.newItem) {
-      const item = await this.itemService.create(dto.newItem);
-      itemUuid = item.uuid;
+      const item = await this.itemService.getOneByName(dto.newItem.name);
+      if (item) {
+        itemUuid = item.uuid;
+      } else {
+        const item = await this.itemService.create(dto.newItem);
+        itemUuid = item.uuid;
+      }
     } else {
       throw new BadRequestException('item or newItem is required');
     }

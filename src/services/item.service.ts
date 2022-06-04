@@ -18,4 +18,11 @@ export class ItemService extends AbstractService<Item> {
       .leftJoinAndSelect('item.place', 'place')
       .leftJoinAndSelect('item.nutrients', 'nutrients');
   }
+
+  async getOneByName(name: string): Promise<Item | undefined> {
+    const items = await this.getQueryBuilder()
+      .where('item.name = :name', { name: name })
+      .getMany();
+    return items.length === 1 ? items[0] : undefined;
+  }
 }

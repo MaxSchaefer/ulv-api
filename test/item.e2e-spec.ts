@@ -84,4 +84,30 @@ describe('Item', () => {
       expect.objectContaining({ uuid: item.uuid, name: updateDto.name }),
     );
   });
+
+  it('Create and read item with group-key', async () => {
+    const groupKeyHeader = { 'X-Group-Key': '123-abc-456' };
+
+    let res;
+    let body;
+
+    // Create item with group-key
+    const dto: CreateItemDto = { name: 'Apfel' };
+    res = req.post('/items').send(dto).set(groupKeyHeader).expect(201);
+    ({ body } = await res);
+
+    expect(body).toEqual(expect.objectContaining({ name: dto.name }));
+
+    // Create item without group-key
+    await req.post('/items').send({ name: 'Banane' }).expect(201);
+
+    // Read item
+    res = req.get('/items').set(groupKeyHeader).expect(200);
+    ({ body } = await res);
+
+    expect(body).toHaveLength(1);
+    expect(body).toEqual(
+      expect.arrayContaining([expect.objectContaining({ name: 'Apfel' })]),
+    );
+  });
 });

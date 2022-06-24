@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   DeleteDateColumn,
   PrimaryGeneratedColumn,
@@ -10,6 +11,10 @@ import { ApiHideProperty } from '@nestjs/swagger';
 export abstract class AbstractEntity {
   @PrimaryGeneratedColumn('uuid')
   uuid: UUID;
+
+  @ApiHideProperty()
+  @Column({ nullable: true, select: false })
+  groupKey?: string;
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;

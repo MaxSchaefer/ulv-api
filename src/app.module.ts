@@ -14,6 +14,8 @@ import { CartItemController } from './controllers/cart-item.controller';
 import { CartItemService } from './services/cart-item.service';
 import { CartItem } from './entities/cart-item.entity';
 import { SqliteController } from './controllers/sqlite.controller';
+import { ClsModule } from 'nestjs-cls';
+import clsGroupKeySetup from './utils/cls-group-key-setup';
 
 @Module({
   imports: [
@@ -30,7 +32,14 @@ import { SqliteController } from './controllers/sqlite.controller';
         synchronize: true,
       }),
     }),
-    TypeOrmModule.forFeature([Item, Place, Nutrients, CartItem])
+    TypeOrmModule.forFeature([Item, Place, Nutrients, CartItem]),
+    ClsModule.register({
+      global: true,
+      middleware: {
+        mount: true,
+        setup: clsGroupKeySetup,
+      }
+    })
   ],
   controllers: [ItemController, PlaceController, CartItemController, SqliteController],
   providers: [ItemService, PlaceService, NutrientsService, CartItemService],

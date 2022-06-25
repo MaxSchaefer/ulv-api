@@ -11,9 +11,11 @@ import { ItemService } from '../services/item.service';
 import { CreateItemDto, UpdateItemDto } from '../dtos/item.dto';
 import { Item } from '../entities/item.entity';
 import { UUID } from '../utils/uuid.type';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import xGroupKeySwaggerHeader from '../utils/x-group-key-swagger-header';
 
 @ApiTags('items')
+@ApiHeader(xGroupKeySwaggerHeader)
 @Controller('items')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}

@@ -1,4 +1,4 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import {
   BadRequestException,
   Body,
@@ -15,8 +15,10 @@ import { CartItemService } from '../services/cart-item.service';
 import { CartItem } from '../entities/cart-item.entity';
 import { CreateCartItemDto, UpdateCartItemDto } from '../dtos/cart-item.dto';
 import { ItemService } from '../services/item.service';
+import xGroupKeySwaggerHeader from '../utils/x-group-key-swagger-header';
 
 @ApiTags('cart-items')
+@ApiHeader(xGroupKeySwaggerHeader)
 @Controller('cart-items')
 export class CartItemController {
   constructor(

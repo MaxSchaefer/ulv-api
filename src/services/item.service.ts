@@ -21,7 +21,7 @@ export class ItemService extends AbstractService<Item> {
 
   async getOneByName(name: string): Promise<Item | undefined> {
     const items = await this.getQueryBuilder()
-      .where('item.name = :name', { name: name })
+      .andWhere('item.name = :name', { name: name })
       .getMany();
     return items.length === 1 ? items[0] : undefined;
   }
